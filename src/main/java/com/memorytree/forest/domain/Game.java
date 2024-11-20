@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "diary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

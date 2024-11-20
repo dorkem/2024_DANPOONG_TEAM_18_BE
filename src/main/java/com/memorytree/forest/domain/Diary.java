@@ -12,7 +12,11 @@ import java.util.Date;
 @Table(name = "diary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Diary {
-    @ManyToOne
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
