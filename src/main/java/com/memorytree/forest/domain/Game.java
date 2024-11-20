@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "diary")
+@Table(name = "game")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
     //PK
@@ -18,6 +18,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //FK
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
