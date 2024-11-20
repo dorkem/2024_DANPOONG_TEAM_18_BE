@@ -13,18 +13,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // Convertor 에서 바인딩 실패시 발생하는 예외
-    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    public ResponseDto<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.error("handleHttpMessageNotReadableException() in GlobalExceptionHandler throw HttpMessageNotReadableException : {}", e.getMessage());
-        return ResponseDto.fail(new CommonException(ErrorCode.BAD_REQUEST_JSON));
-    }
-    // 지원되지 않는 HTTP 메소드를 사용할 때 발생하는 예외
-    @ExceptionHandler(value = {NoHandlerFoundException.class, HttpRequestMethodNotSupportedException.class})
-    public ResponseDto<?> handleNoPageFoundException(Exception e) {
-        log.error("handleNoPageFoundException() in GlobalExceptionHandler throw NoHandlerFoundException : {}", e.getMessage());
-        return ResponseDto.fail(new CommonException(ErrorCode.WRONG_ENTRY_POINT));
-    }
 
     // 메소드의 인자 타입이 일치하지 않을 때 발생하는 예외
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
@@ -43,8 +31,9 @@ public class GlobalExceptionHandler {
      * 커스텀 exception
      */
     @ExceptionHandler(value = {CommonException.class})
-    public ResponseDto<?> handleCustomException(CommonException e){
-        return ResponseDto.fail(e);
+    public ResponseDto<?> handleCustomException(CommonException e) {
+        log.error("handleCommonException() in GlobalExceptionHandler throw CommonException : {}", e.getMessage());
+        return ResponseDto.fail(new CommonException(e.getErrorCode()));
     }
     /**
      * 서버 exception
