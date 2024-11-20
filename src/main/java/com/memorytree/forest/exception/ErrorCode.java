@@ -44,6 +44,9 @@ public enum ErrorCode {
     NOT_FOUND_ASSIGN_TICKET(40408, HttpStatus.NOT_FOUND, "존재하지 않는 양도 티켓입니다."),
     NOT_FOUND_NOTIFICATION(40409, HttpStatus.NOT_FOUND, "존재하지 않는 알림 입니다."),
 
+    // 409 (Conflict)
+    DIARY_ALREADY_EXISTS(40900, HttpStatus.CONFLICT, "이미 오늘의 일기가 존재합니다."),
+
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다"),
     INTERNAL_DATA_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "데이터 처리 중 오류가 발생하였습니다."),

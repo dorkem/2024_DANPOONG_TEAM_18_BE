@@ -73,10 +73,20 @@ public class DiaryService {
         // 사용자 정보 조회
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
+        // 오늘 날짜 조회
+        LocalDate today = LocalDate.now();
+
+        // 오늘 날짜와 해당 사용자로 Diary 조회
+        boolean diaryExists = diaryRepository.findByWhenAndUser(today, user).isPresent();
+        if (diaryExists) {
+            // Diary가 이미 존재하면 예외 발생
+            throw new CommonException(ErrorCode.DIARY_ALREADY_EXISTS);
+        }
+
         Diary newDiary = new Diary(user);
+        //diaryDB update
         newDiary.updateWhere(diaryTextRequestDto.diary_where());
         newDiary.updateWho(diaryTextRequestDto.diary_who());
         newDiary.updateWhat(diaryTextRequestDto.diary_what());
-        return;
     }
 }
