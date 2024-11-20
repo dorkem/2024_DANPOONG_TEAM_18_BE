@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
+    //PK
+    @Id
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 

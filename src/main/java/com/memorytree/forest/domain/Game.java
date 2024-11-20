@@ -12,6 +12,13 @@ import java.time.LocalDateTime;
 @Table(name = "diary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
+    //PK
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //FK
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -12,6 +12,13 @@ import java.util.Date;
 @Table(name = "diary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Diary {
+    //PK
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //FK
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
