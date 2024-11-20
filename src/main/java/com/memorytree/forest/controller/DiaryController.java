@@ -32,8 +32,8 @@ public class DiaryController {
             @UserId Long userId,
             @RequestBody DiaryTextRequestDto diaryTextRequestDto
     ){
-        DiaryTextResponseDto diaryTextResponseDto = diaryService.textRecord(userId, diaryTextRequestDto);
-        return ResponseDto.ok(diaryTextResponseDto);
+        diaryService.textRecord(userId, diaryTextRequestDto);
+        return ResponseDto.ok(null);
     }
 
 }
