@@ -1,3 +1,8 @@
 spring:
   application:
     name: forest
+  profiles:
+    group:
+      dev: dev, local
+      deploy: deploy
+    active: dev
