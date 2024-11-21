@@ -1,6 +1,8 @@
 package com.memorytree.forest.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.memorytree.forest.domain.User;
+import com.memorytree.forest.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,11 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final UserService userService;
+
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,18 +43,21 @@ public class SecurityConfig {
             var kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
             var profile = (Map<String, Object>) kakaoAccount.get("profile");
 
+            Long id = (Long) attributes.get("id");
             String email = (String) kakaoAccount.get("email");
             String nickname = (String) profile.get("nickname");
             String profileImage = (String) profile.get("profile_image_url");
 
-            var responseDto = ResponseDto.ok(new LoginResponseDto(email, nickname, profileImage));
+            userService.createUser(id, nickname);
+
+            var responseDto = ResponseDto.ok(new LoginResponseDto(id, email, nickname, profileImage));
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             new ObjectMapper().writeValue(response.getWriter(), responseDto);
         };
     }
 
-    public record LoginResponseDto(String email, String nickname, String profileImage) {}
+    public record LoginResponseDto(Long id, String email, String nickname, String profileImage) {}
 
     public record ResponseDto<T>(boolean success, T data, String error) {
         public static <T> ResponseDto<T> ok(T data) {

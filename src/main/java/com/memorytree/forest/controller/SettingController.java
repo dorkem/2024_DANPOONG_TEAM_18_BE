@@ -16,7 +16,7 @@ public class SettingController {
 
     // 사용자 설정 정보 조회
     @GetMapping
-    public ResponseDto<Object> getSetting(@RequestHeader("id") Long kakaoId) {
+    public ResponseDto<Object> getSetting(@UserId Long kakaoId) {
         return userService.getUserSettings(kakaoId);
     }
 }
