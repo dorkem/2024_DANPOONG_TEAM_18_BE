@@ -31,7 +31,7 @@ public class MissionService {
     }
 
     public MissionDto getMissionStateByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
         // todo: 게임 테이블에 유저와 연결된 레코드가 없을 경우에 처리할 에러 코드가 필요?
         Game game = gameRepository.findByUser(user).orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_DATA_ERROR));
 
