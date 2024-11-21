@@ -33,6 +33,9 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      # 권한 부여
+      - name: Add execution permissions to Gradle Wrapper
+        run: chmod +x ./gradlew
 
       # 환경별 yml 파일 생성(1) - application.yml
       - name: make application.yml
