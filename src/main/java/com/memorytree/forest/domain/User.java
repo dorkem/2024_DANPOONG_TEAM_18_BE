@@ -4,13 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -42,6 +43,12 @@ public class User {
 
     @Column(name = "coin", nullable = false)
     private int coin = 0;
+
+    @Column(name = "last_login_time", nullable = false)
+    private LocalDate lastLoginDate = LocalDate.now();
+
+    @Column(name = "login_streaks", nullable = false)
+    private Integer loginStreaks = 1;
 
     @Builder
     public User(Long id, String name, String profile) {

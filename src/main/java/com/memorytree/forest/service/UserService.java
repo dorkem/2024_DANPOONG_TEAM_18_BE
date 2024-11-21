@@ -7,6 +7,8 @@ import com.memorytree.forest.exception.ErrorCode;
 import com.memorytree.forest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -47,4 +49,20 @@ public class UserService {
         return ResponseDto.ok(response);
     }
 
+    public void accumulateLoginStreak(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
+
+        LocalDate lastLoginDate = user.getLastLoginDate();
+        LocalDate today = LocalDate.now();
+        user.setLastLoginDate(today);
+        Long daysBetween = ChronoUnit.DAYS.between(lastLoginDate, today);
+        if (daysBetween > 1) {
+            // 연속 출석일수 초기화
+            user.setLoginStreaks(1);
+        } else if (daysBetween == 1) {
+            // 출석일 수 차이가 1일만 차이날 때 누적
+            user.setLoginStreaks(user.getLoginStreaks() + 1);
+        }
+        userRepository.save(user);
+    }
 }

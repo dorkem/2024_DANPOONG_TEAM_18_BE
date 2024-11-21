@@ -1,7 +1,6 @@
 package com.memorytree.forest.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.memorytree.forest.domain.User;
 import com.memorytree.forest.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,6 +48,7 @@ public class SecurityConfig {
             String profileImage = (String) profile.get("profile_image_url");
 
             userService.createUser(id, nickname);
+            userService.accumulateLoginStreak(id);
 
             var responseDto = ResponseDto.ok(new LoginResponseDto(id, email, nickname, profileImage));
             response.setContentType("application/json");
