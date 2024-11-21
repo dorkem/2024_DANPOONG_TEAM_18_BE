@@ -12,6 +12,7 @@ import com.memorytree.forest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MissionService {
@@ -28,11 +29,16 @@ public class MissionService {
         // todo: 게임 테이블에 유저와 연결된 레코드가 없을 경우에 처리할 에러 코드가 필요?
         Game game = gameRepository.findByUser(user).orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_DATA_ERROR));
 
+        List<GameRecordDto> statistics = List.of(
+                new GameRecordDto("숫자 순서 게임", game.getNumberSequenceGame()),
+                new GameRecordDto("틀린 글자 찾기", game.getSpotDifferenceGame()),
+                new GameRecordDto("카드 뒤집기", game.getFlipCardGame())
+        );
         return new MissionDto(
                 false, // todo: 테스트용도로 일부러 써놓음
                 true,
                 user.getLevel(),
-                new ArrayList<>()
+                statistics
         );
     }
 }
