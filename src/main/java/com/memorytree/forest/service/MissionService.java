@@ -11,6 +11,7 @@ import com.memorytree.forest.repository.GameRepository;
 import com.memorytree.forest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,12 @@ public class MissionService {
         List<GameRecordDto> statistics = List.of(
                 new GameRecordDto("숫자 순서 게임", game.getNumberSequenceGame()),
                 new GameRecordDto("틀린 글자 찾기", game.getSpotDifferenceGame()),
-                new GameRecordDto("카드 뒤집기", game.getFlipCardGame())
-        );
+                new GameRecordDto("카드 뒤집기", game.getFlipCardGame()));
+        Boolean gamePlayed = game.getLastPlayedTime().getMonth().equals(LocalDateTime.now().getMonth());
+        Boolean diaryWrote = false;
         return new MissionDto(
-                false, // todo: 테스트용도로 일부러 써놓음
-                true,
+                gamePlayed,
+                diaryWrote,
                 user.getLevel(),
                 statistics
         );
