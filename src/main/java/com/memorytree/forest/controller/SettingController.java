@@ -1,5 +1,6 @@
 package com.memorytree.forest.controller;
 
+import com.memorytree.forest.annotation.UserId;
 import com.memorytree.forest.dto.global.ResponseDto;
 import com.memorytree.forest.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class SettingController {
 
     // 사용자 설정 정보 조회
     @GetMapping
-    public ResponseDto<Object> getSetting(@UserId Long kakaoId) {
-        return userService.getUserSettings(kakaoId);
+    public ResponseDto<Object> getSetting(@UserId Long Id) {
+        return userService.getUserSettings(Id);
     }
 }
