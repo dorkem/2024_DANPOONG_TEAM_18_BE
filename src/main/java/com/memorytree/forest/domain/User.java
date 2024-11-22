@@ -29,6 +29,9 @@ public class User {
     @Column(name = "mission_num", nullable = false)
     private int missionNum = 0;
 
+    @Column(name = "diary_answer")
+    private String diaryAnswer;
+  
     @Column(name = "diary_num_month", nullable = false)
     private int diaryNumMonth = 0;
 
@@ -53,10 +56,16 @@ public class User {
     @Column(name = "last_quiz_played_date")
     private LocalDate lastQuizPlayedDate;
 
+
     @Builder
     public User(Long id, String name, String profile) {
         this.id = id;
         this.name = name;
         this.profile = profile;
     }
+
+    public void updateDiaryAnswer(String diaryAnswer){
+        this.diaryAnswer = diaryAnswer;
+    }
+
 }
