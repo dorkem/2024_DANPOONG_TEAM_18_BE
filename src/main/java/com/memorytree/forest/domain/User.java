@@ -36,7 +36,7 @@ public class User {
     private int level = 1;
 
     @Column(name = "level_exp", nullable = false)
-    private int levelEXP = 0;
+    private float levelEXP = 0.0F;
 
     @Column(name = "coin", nullable = false)
     private int coin = 0;
