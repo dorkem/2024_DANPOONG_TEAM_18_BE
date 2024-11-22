@@ -40,7 +40,7 @@ public class MissionService {
                 new GameRecordDto("틀린 글자 찾기", game.getSpotDifferenceGame()),
                 new GameRecordDto("카드 뒤집기", game.getFlipCardGame()));
         LocalDateTime today = LocalDateTime.now();
-        Boolean gamePlayed = game.getLastPlayedTime().getMonth().equals(today.getMonth());
+        Boolean gamePlayed = user.getLastGamePlayedDate().getMonth().equals(today.getMonth());
         Boolean diaryWrote = diaryRepository.findByWhenAndUser(today.toLocalDate(), user).isPresent();
         return new MissionDto(
                 gamePlayed,

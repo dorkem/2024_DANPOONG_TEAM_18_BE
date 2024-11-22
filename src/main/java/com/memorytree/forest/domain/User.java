@@ -1,9 +1,6 @@
 package com.memorytree.forest.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -49,6 +46,12 @@ public class User {
 
     @Column(name = "login_streaks", nullable = false)
     private Integer loginStreaks = 1;
+
+    @Column(name = "last_game_played_date")
+    private LocalDate lastGamePlayedDate;
+
+    @Column(name = "last_quiz_played_date")
+    private LocalDate lastQuizPlayedDate;
 
     @Builder
     public User(Long id, String name, String profile) {
