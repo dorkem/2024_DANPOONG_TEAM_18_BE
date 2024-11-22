@@ -87,5 +87,5 @@ jobs:
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
-            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
+            sudo docker run -d -p 8080:3306 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
             sudo docker image prune -f
