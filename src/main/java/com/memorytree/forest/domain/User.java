@@ -23,22 +23,22 @@ public class User {
     private String profile;
 
     @Column(name = "walk")
-    private int walk;
+    private Integer walk;
 
     @Column(name = "mission_num")
-    private int missionNum;
+    private Integer missionNum;
 
     @Column(name = "diary_num_month")
-    private int diaryNumMonth;
+    private Integer diaryNumMonth;
 
     @Column(name = "level")
-    private int level;
+    private Integer level;
 
     @Column(name = "level_exp")
-    private int levelXP;
+    private Integer levelXP;
 
     @Column(name = "coin")
-    private int coin;
+    private Integer coin;
 
     @Column(name = "diary_answer")
     private String diaryAnswer;
