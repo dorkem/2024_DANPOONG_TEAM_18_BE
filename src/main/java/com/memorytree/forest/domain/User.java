@@ -1,13 +1,11 @@
 package com.memorytree.forest.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -35,7 +33,7 @@ public class User {
     private int level;
 
     @Column(name = "level_exp")
-    private int levelEXP;
+    private float levelEXP;
 
     @Column(name = "coin")
     private int coin;
