@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "game")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
@@ -25,14 +27,17 @@ public class Game {
 
 
     @Column(name = "number_sequence_game")
-    private LocalDateTime numberSequenceGame;
+    private Float numberSequenceGame;
 
     @Column(name = "spot_difference_game")
-    private String spotDifferenceGame;
+    private Float spotDifferenceGame;
 
     @Column(name = "flip_card_game")
-    private String flipCardGame;
+    private Float flipCardGame;
 
     @Column(name = "tangram_puzzle")
-    private String tangramPuzzle;
+    private Float tangramPuzzle;
+
+    @Column(name = "last_played_time")
+    private LocalDateTime lastPlayedTime;
 }
