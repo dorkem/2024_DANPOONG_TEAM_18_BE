@@ -18,7 +18,7 @@ public class MissionController {
     }
 
     @GetMapping
-    public ResponseDto<MissionDto> getMissionState(@UserId Long userId) {
-        return ResponseDto.ok(missionService.getMissionStateByUser(userId));
+    public ResponseDto<MissionDto> getMissionState(@UserId Long id) {
+        return ResponseDto.ok(missionService.getMissionStateByUser(id));
     }
 }
