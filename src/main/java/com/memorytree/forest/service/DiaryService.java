@@ -111,6 +111,7 @@ public class DiaryService {
         newDiary.updateWho(diaryTextRequestDto.diary_who());
         newDiary.updateWhat(diaryTextRequestDto.diary_what());
         diaryRepository.save(newDiary);
+        //TODO: 경험치 1점 올리는 코드
     }
 
     public DiaryQuizResponseDto createQuiz(Long id){
@@ -220,6 +221,7 @@ public class DiaryService {
         if(user.getDiaryAnswer() == answer){
             correct = true;
         }
+        //TODO: 경험치 0.5 올리는 코드
         return new DiaryQuizAnswerResponseDto(correct, user.getDiaryAnswer());
     }
 }
