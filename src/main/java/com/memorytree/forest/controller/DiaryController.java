@@ -1,6 +1,7 @@
 package com.memorytree.forest.controller;
 
 import com.memorytree.forest.annotation.UserId;
+import com.memorytree.forest.domain.User;
 import com.memorytree.forest.dto.global.ResponseDto;
 import com.memorytree.forest.dto.request.DiaryAudioRequestDto;
 import com.memorytree.forest.dto.request.DiaryTextRequestDto;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class DiaryController {
 
     private final DiaryService diaryService;
+
 
     @PatchMapping("/audio")
     public ResponseDto<?> audio(
