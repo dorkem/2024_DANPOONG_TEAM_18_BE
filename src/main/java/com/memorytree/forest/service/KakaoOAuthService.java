@@ -1,6 +1,6 @@
 package com.memorytree.forest.service;
 
-import com.memorytree.forest.dto.response.KakaoUserInfo;
+import com.memorytree.forest.dto.response.KakaoUserInfoResponseDto;
 import com.memorytree.forest.domain.User;
 import com.memorytree.forest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class KakaoOAuthService {
     private static final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 
-    public KakaoUserInfo getKakaoUserInfo(String code) {
+    public KakaoUserInfoResponseDto getKakaoUserInfo(String code) {
         // 1. 인가 코드로 액세스 토큰 요청
         String accessToken = getAccessToken(code);
 
         // 2. 액세스 토큰으로 사용자 정보 요청
-        KakaoUserInfo userInfo = getUserInfoFromKakao(accessToken);
+        KakaoUserInfoResponseDto userInfo = getUserInfoFromKakao(accessToken);
 
         // 3. 사용자 정보를 User 테이블에 저장
         saveUser(userInfo);
@@ -52,7 +52,7 @@ public class KakaoOAuthService {
         return (String) response.getBody().get("access_token");
     }
 
-    private KakaoUserInfo getUserInfoFromKakao(String accessToken) {
+    private KakaoUserInfoResponseDto getUserInfoFromKakao(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
 
@@ -68,7 +68,7 @@ public class KakaoOAuthService {
         Map<String, Object> kakaoAccount = (Map<String, Object>) response.getBody().get("kakao_account");
         Map<String, Object> properties = (Map<String, Object>) response.getBody().get("properties");
 
-        return KakaoUserInfo.builder()
+        return KakaoUserInfoResponseDto.builder()
                 .id((Long) response.getBody().get("id"))
                 .email((String) kakaoAccount.get("email"))
                 .nickname((String) properties.get("nickname"))
@@ -76,7 +76,7 @@ public class KakaoOAuthService {
                 .build();
     }
 
-    private void saveUser(KakaoUserInfo userInfo) {
+    private void saveUser(KakaoUserInfoResponseDto userInfo) {
         // 이미 존재하는 사용자 확인
         User existingUser = userRepository.findById(userInfo.getId()).orElse(null);
 

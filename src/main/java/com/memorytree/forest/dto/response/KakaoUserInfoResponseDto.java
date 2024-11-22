@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class KakaoUserInfo {
+public class KakaoUserInfoResponseDto {
     private Long id;
     private String email;
     private String nickname;
