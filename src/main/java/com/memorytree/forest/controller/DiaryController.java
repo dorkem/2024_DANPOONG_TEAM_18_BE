@@ -5,12 +5,11 @@ import com.memorytree.forest.dto.global.ResponseDto;
 import com.memorytree.forest.dto.request.DiaryAudioRequestDto;
 import com.memorytree.forest.dto.request.DiaryTextRequestDto;
 import com.memorytree.forest.dto.response.DiaryAudioResponseDto;
+import com.memorytree.forest.dto.response.DiaryQuizAnswerResponseDto;
+import com.memorytree.forest.dto.response.DiaryQuizResponseDto;
 import com.memorytree.forest.service.DiaryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vi/diary")
@@ -21,19 +20,34 @@ public class DiaryController {
 
     @PatchMapping("/audio")
     public ResponseDto<?> audio(
-            @UserId Long userId,
+            @UserId Long id,
             @RequestBody DiaryAudioRequestDto diaryAudioRequestDto
     ){
-        DiaryAudioResponseDto diaryAudioResponseDto = diaryService.audioRecord(userId, diaryAudioRequestDto.type());
+        DiaryAudioResponseDto diaryAudioResponseDto = diaryService.audioRecord(id, diaryAudioRequestDto.type());
         return ResponseDto.ok(diaryAudioResponseDto);
     }
-    @PatchMapping("/text")
+    @PostMapping("/text")
     public ResponseDto<?> text(
-            @UserId Long userId,
+            @UserId Long id,
             @RequestBody DiaryTextRequestDto diaryTextRequestDto
     ){
-        diaryService.textRecord(userId, diaryTextRequestDto);
+        diaryService.textRecord(id, diaryTextRequestDto);
         return ResponseDto.ok(null);
+    }
+    @GetMapping("/quiz")
+    public ResponseDto<?> quiz(
+            @UserId Long id
+    ){
+        DiaryQuizResponseDto diaryQuizResponseDto = diaryService.createQuiz(id);
+        return ResponseDto.ok(diaryQuizResponseDto);
+    }
+    @PatchMapping("/quiz/answer")
+    public ResponseDto<?> quizAnswer(
+            @UserId Long id,
+            @RequestBody String choice
+    ){
+        DiaryQuizAnswerResponseDto diaryQuizAnswerResponseDto = diaryService.confirmAnswer(id,choice);
+        return ResponseDto.ok(diaryQuizAnswerResponseDto);
     }
 
 }

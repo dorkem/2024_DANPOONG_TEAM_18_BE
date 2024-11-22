@@ -35,15 +35,22 @@ public class User {
     private int level;
 
     @Column(name = "level_exp")
-    private int levelEXP;
+    private int levelXP;
 
     @Column(name = "coin")
     private int coin;
+
+    @Column(name = "diary_answer")
+    private String diaryAnswer;
 
     @Builder
     public User(Long id, String name){
         this.id = id;
         this.name = name;
+    }
+
+    public void updateDiaryAnswer(String diaryAnswer){
+        this.diaryAnswer = diaryAnswer;
     }
 
 }
