@@ -37,7 +37,4 @@ public class Game {
 
     @Column(name = "tangram_puzzle")
     private Float tangramPuzzle;
-
-    @Column(name = "last_played_time")
-    private LocalDateTime lastPlayedTime;
 }

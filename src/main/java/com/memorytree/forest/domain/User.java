@@ -3,6 +3,9 @@ package com.memorytree.forest.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -37,6 +40,12 @@ public class User {
 
     @Column(name = "coin")
     private int coin;
+
+    @Column(name = "last_game_played_date")
+    private LocalDate lastGamePlayedDate;
+
+    @Column(name = "last_quiz_played_date")
+    private LocalDate lastQuizPlayedDate;
 
     @Builder
     public User(Long id, String name){

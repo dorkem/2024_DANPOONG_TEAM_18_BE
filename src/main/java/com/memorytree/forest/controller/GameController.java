@@ -28,6 +28,7 @@ public class GameController {
     @PatchMapping("/play")
     public ResponseDto<GameResultResponseDto> updateHighScore(@UserId Long id, @RequestBody GameResultRequestDto gameResult) {
         userService.addEXPAfterGamePlayed(id);
+        userService.addCoinAfterGamePlayed(id);
         return ResponseDto.ok(gameService.updateHighScore(id, gameResult));
     }
 }
