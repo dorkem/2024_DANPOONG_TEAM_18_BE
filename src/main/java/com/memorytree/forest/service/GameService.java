@@ -33,7 +33,7 @@ public class GameService {
 
         GameType selectedGameType = getRandomGameType();
         // todo: if-else로 안하는 방법...?
-        float highScore = getHighScoreByGameType(selectedGameType, game);
+        Float highScore = getHighScoreByGameType(selectedGameType, game);
 
         return selectedGameType.toDto(highScore);
     }
@@ -45,7 +45,7 @@ public class GameService {
         return gameTypes[index];
     }
 
-    private float getHighScoreByGameType(GameType selectedGameType, Game game) {
+    private Float getHighScoreByGameType(GameType selectedGameType, Game game) {
         if (selectedGameType.equals(GameType.숫자_순서_게임)) {
             return game.getNumberSequenceGame();
         } else if(selectedGameType.equals(GameType.카드_뒤집기)) {

@@ -26,14 +26,14 @@ public class Game {
 
 
     @Column(name = "number_sequence_game")
-    private Float numberSequenceGame = Float.MAX_VALUE;
+    private Float numberSequenceGame;
 
     @Column(name = "spot_difference_game")
-    private Float spotDifferenceGame= Float.MAX_VALUE;;
+    private Float spotDifferenceGame;
 
     @Column(name = "flip_card_game")
-    private Float flipCardGame= Float.MAX_VALUE;;
+    private Float flipCardGame;
 
     @Column(name = "tangram_puzzle")
-    private Float tangramPuzzle = Float.MAX_VALUE;;
+    private Float tangramPuzzle;
 }
