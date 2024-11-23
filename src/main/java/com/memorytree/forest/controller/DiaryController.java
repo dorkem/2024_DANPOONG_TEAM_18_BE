@@ -32,13 +32,5 @@ public class DiaryController {
         DiaryQuizResponseDto diaryQuizResponseDto = diaryService.createQuiz(id);
         return ResponseDto.ok(diaryQuizResponseDto);
     }
-    @PatchMapping("/quiz/answer")
-    public ResponseDto<?> quizAnswer(
-            @UserId Long id,
-            @RequestBody String choice
-    ){
-        DiaryQuizAnswerResponseDto diaryQuizAnswerResponseDto = diaryService.confirmAnswer(id,choice);
-        return ResponseDto.ok(diaryQuizAnswerResponseDto);
-    }
 
 }

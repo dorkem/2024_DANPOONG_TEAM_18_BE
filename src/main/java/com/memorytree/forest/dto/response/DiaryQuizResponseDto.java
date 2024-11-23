@@ -8,6 +8,8 @@ public record DiaryQuizResponseDto (
         @JsonProperty("question")
         String question,
         @JsonProperty("choices")
-        List<String> choices
+        List<String> choices,
+        @JsonProperty("correctAnswer")
+        String correctAnswer
 ){
 }

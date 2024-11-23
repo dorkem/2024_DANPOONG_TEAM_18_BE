@@ -136,7 +136,7 @@ public class DiaryService {
         // 보기 순서 섞기
         Collections.shuffle(choices);
 
-        return new DiaryQuizResponseDto(generateQuestionText(questionField, targetDiary, correctAnswer), choices);
+        return new DiaryQuizResponseDto(generateQuestionText(questionField, targetDiary, correctAnswer), choices, correctAnswer);
     }
     // 질문 텍스트 생성
     private String generateQuestionText(String field, Diary diary, String correctAnswer) {
