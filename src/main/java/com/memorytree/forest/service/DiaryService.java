@@ -23,11 +23,13 @@ public class DiaryService {
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
     private final SttService sttService;
+    private final UserService userService;
 
-    public  DiaryService(UserRepository userRepository,DiaryRepository diaryRepository ,SttService sttService){
+    public  DiaryService(UserRepository userRepository, DiaryRepository diaryRepository , SttService sttService, UserService userService){
         this.userRepository = userRepository;
         this.diaryRepository = diaryRepository;
         this.sttService = sttService;
+        this.userService = userService;
     }
 
     private boolean isValidType(String type) {
@@ -111,7 +113,7 @@ public class DiaryService {
         newDiary.updateWho(diaryTextRequestDto.diary_who());
         newDiary.updateWhat(diaryTextRequestDto.diary_what());
         diaryRepository.save(newDiary);
-        //TODO: 경험치 1점 올리는 코드
+        userService.addEXPAfterDiaryWrote(id);
     }
 
     public DiaryQuizResponseDto createQuiz(Long id){
@@ -221,7 +223,7 @@ public class DiaryService {
         if(user.getDiaryAnswer() == answer){
             correct = true;
         }
-        //TODO: 경험치 0.5 올리는 코드
+        userService.addEXPAfterQuizPlayed(id);
         return new DiaryQuizAnswerResponseDto(correct, user.getDiaryAnswer());
     }
 }
