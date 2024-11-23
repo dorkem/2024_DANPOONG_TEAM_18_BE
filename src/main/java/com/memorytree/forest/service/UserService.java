@@ -104,12 +104,11 @@ public class UserService {
         user.setLastQuizPlayedDate(LocalDate.now());
         userRepository.save(user);
     }
-
     private boolean isLastDateEqualToToday(LocalDate lastPlayedDate) {
         if (lastPlayedDate == null) {
             return false;
         }
-        return !lastPlayedDate.equals(LocalDate.now());
+        return lastPlayedDate.equals(LocalDate.now());
     }
 
     private void addExpToUser(User user, float exp) {
