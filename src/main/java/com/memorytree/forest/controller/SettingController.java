@@ -17,7 +17,7 @@ public class SettingController {
 
     // 사용자 설정 정보 조회
     @GetMapping
-    public ResponseDto<Object> getSetting(@UserId Long Id) {
-        return userService.getUserSettings(Id);
+    public ResponseDto<Object> getSetting(@UserId Long id) {
+        return userService.getUserSettings(id);
     }
 }

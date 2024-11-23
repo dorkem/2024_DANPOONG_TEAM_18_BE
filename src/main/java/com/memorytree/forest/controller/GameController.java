@@ -10,7 +10,7 @@ import com.memorytree.forest.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/game")
+@RequestMapping("/api/vi/game")
 public class GameController {
     private final GameService gameService;
     private final UserService userService;

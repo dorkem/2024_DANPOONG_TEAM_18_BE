@@ -1,9 +1,11 @@
 package com.memorytree.forest.service;
 
+import com.memorytree.forest.domain.Game;
 import com.memorytree.forest.domain.User;
 import com.memorytree.forest.dto.global.ResponseDto;
 import com.memorytree.forest.exception.CommonException;
 import com.memorytree.forest.exception.ErrorCode;
+import com.memorytree.forest.repository.GameRepository;
 import com.memorytree.forest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -18,21 +20,33 @@ import java.time.LocalDate;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
+    private final GameRepository gameRepository;
+    public UserService(UserRepository userRepository, GameRepository gameRepository) {
         this.userRepository = userRepository;
+        this.gameRepository = gameRepository;
     }
 
     // 카카오 로그인 후 유저 생성
     public void createUser(Long kakaoId, String name) {
         Optional<User> existingUser = userRepository.findById(kakaoId);
+
         if (existingUser.isEmpty()) {
             User user = User.builder()
                     .id(kakaoId)
                     .name(name)
                     .build();
             userRepository.save(user);
+            // Game 엔티티 생성
+            Game game = Game.builder()
+                    .user(user)
+                    .numberSequenceGame(Float.MAX_VALUE)
+                    .spotDifferenceGame(Float.MAX_VALUE)
+                    .flipCardGame(Float.MAX_VALUE)
+                    .tangramPuzzle(Float.MAX_VALUE)
+                    .build();
+            gameRepository.save(game);
         }
+
     }
 
     // 사용자 설정 정보 반환
