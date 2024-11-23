@@ -3,6 +3,7 @@ package com.memorytree.forest.service;
 import com.memorytree.forest.domain.Game;
 import com.memorytree.forest.domain.User;
 import com.memorytree.forest.dto.global.ResponseDto;
+import com.memorytree.forest.dto.response.HomeResponceDto;
 import com.memorytree.forest.exception.CommonException;
 import com.memorytree.forest.exception.ErrorCode;
 import com.memorytree.forest.repository.GameRepository;
@@ -157,5 +158,18 @@ public class UserService {
     private void addCoinToUser(User user, int coin) {
         int currentCoin = user.getCoin();
         user.setCoin(currentCoin + coin);
+    }
+
+    public HomeResponceDto returnLoginStreaks(Long id){
+        // 요청 파라미터 검증
+        if (id == null) {
+            throw new CommonException(ErrorCode.MISSING_REQUEST_PARAMETER);
+        }
+
+        // 사용자 정보 조회
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
+
+        return new HomeResponceDto(user.getLoginStreaks());
     }
 }
