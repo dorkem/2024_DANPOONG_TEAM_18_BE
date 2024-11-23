@@ -91,6 +91,7 @@ jobs:
             if [ -n "$container_id" ]; then
               echo "Found container with ID: $container_id. Stopping it..."
               docker stop "$container_id"
+              docker rm "$container_id"
               echo "Container stopped successfully."
             else
               echo "No container is using port $port."
