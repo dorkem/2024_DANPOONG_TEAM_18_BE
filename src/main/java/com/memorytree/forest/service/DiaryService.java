@@ -3,14 +3,12 @@ package com.memorytree.forest.service;
 import com.memorytree.forest.domain.Diary;
 import com.memorytree.forest.domain.User;
 import com.memorytree.forest.dto.request.DiaryTextRequestDto;
-import com.memorytree.forest.dto.response.DiaryAudioResponseDto;
 import com.memorytree.forest.dto.response.DiaryQuizAnswerResponseDto;
 import com.memorytree.forest.dto.response.DiaryQuizResponseDto;
 import com.memorytree.forest.exception.CommonException;
 import com.memorytree.forest.exception.ErrorCode;
 import com.memorytree.forest.repository.DiaryRepository;
 import com.memorytree.forest.repository.UserRepository;
-import com.memorytree.forest.stt.SttService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,67 +20,12 @@ import java.util.*;
 public class DiaryService {
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
-    private final SttService sttService;
     private final UserService userService;
 
-    public  DiaryService(UserRepository userRepository, DiaryRepository diaryRepository , SttService sttService, UserService userService){
+    public  DiaryService(UserRepository userRepository, DiaryRepository diaryRepository, UserService userService){
         this.userRepository = userRepository;
         this.diaryRepository = diaryRepository;
-        this.sttService = sttService;
         this.userService = userService;
-    }
-
-    private boolean isValidType(String type) {
-        return List.of("when", "where", "who", "what").contains(type);
-    }
-
-    public DiaryAudioResponseDto audioRecord(Long id,String type){
-        // 요청 파라미터 검증
-        if (id == null || type == null) {
-            throw new CommonException(ErrorCode.MISSING_REQUEST_PARAMETER);
-        }
-        // 요청 타입 검증
-        if (!isValidType(type)) {
-            throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
-        }
-        // 사용자 정보 조회
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
-
-        // 오늘 날짜
-        LocalDate today = LocalDate.now();
-
-        // Diary 객체 조회
-        Diary diary = diaryRepository.findByWhenAndUser(today, user)
-                .orElseGet(() -> {
-                    // Diary가 없으면 생성
-                    Diary newDiary = new Diary(user);
-                    return diaryRepository.save(newDiary);
-                });
-
-        // 음성인식 수행
-        String content = sttService.recognizeSpeechFor3Seconds();
-
-        //음성 인식 결과가 null인 경우 예외 발생
-        if (content == null || content.isBlank()) {
-            throw new CommonException(ErrorCode.STT_NO_SPEECH);
-        }
-
-        switch (type.toLowerCase()) {
-            case "who":
-                diary.updateWho(content);
-                break;
-            case "what":
-                diary.updateWhat(content);
-                break;
-            case "where":
-                diary.updateWhere(content);
-                break;
-            default:
-                throw new CommonException(ErrorCode.BAD_REQUEST_JSON);
-        }
-        diaryRepository.save(diary);
-        return new DiaryAudioResponseDto(type, content);
     }
 
 
@@ -141,6 +84,7 @@ public class DiaryService {
         // 질문을 위한 Diary 객체와 값 설정
         Diary targetDiary = userDiaries.get(0); // 기준 Diary
         String correctAnswer;
+
         switch (questionField) {
             case "when":
                 correctAnswer = targetDiary.getWhen().toString();
@@ -192,23 +136,48 @@ public class DiaryService {
         // 보기 순서 섞기
         Collections.shuffle(choices);
 
-        return new DiaryQuizResponseDto(generateQuestionText(questionField, targetDiary), choices);
+        return new DiaryQuizResponseDto(generateQuestionText(questionField, targetDiary, correctAnswer), choices);
     }
     // 질문 텍스트 생성
-    private String generateQuestionText(String field, Diary diary) {
+    private String generateQuestionText(String field, Diary diary, String correctAnswer) {
+        String when = diary.getWhen().toString();
+        String what = diary.getWhat();
+        String where = diary.getWhere();
+        String who = diary.getWho();
+
+        // correctAnswer를 제외한 나머지 필드의 값
+        List<String> otherFields = new ArrayList<>();
+        if (!"when".equals(field)) {
+            otherFields.add("언제: " + when);
+        }
+        if (!"what".equals(field)) {
+            otherFields.add("무엇: " + what);
+        }
+        if (!"where".equals(field)) {
+            otherFields.add("어디: " + where);
+        }
+        if (!"who".equals(field)) {
+            otherFields.add("누구: " + who);
+        }
+
+        // 나머지 필드 값들을 쉼표로 연결
+        String otherFieldsInfo = String.join(", ", otherFields);
+
+        // 질문 텍스트 생성
         switch (field) {
             case "when":
-                return "언제의 일인가요?";
+                return "언제의 일인가요? (" + otherFieldsInfo + ")";
             case "what":
-                return "무엇을 했나요?";
+                return "무엇을 했나요? (" + otherFieldsInfo + ")";
             case "where":
-                return "어디를 갔나요?";
+                return "어디를 갔나요? (" + otherFieldsInfo + ")";
             case "who":
-                return "누구와 함께 있었나요?";
+                return "누구와 함께 있었나요? (" + otherFieldsInfo + ")";
             default:
                 throw new CommonException(ErrorCode.BAD_REQUEST_JSON);
         }
     }
+
     public DiaryQuizAnswerResponseDto confirmAnswer(Long id, String answer){
         // 요청 파라미터 검증
         if (id == null || answer == null) {

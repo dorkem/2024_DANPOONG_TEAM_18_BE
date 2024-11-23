@@ -39,14 +39,6 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-	//goole api
-	implementation 'com.google.cloud:google-cloud-speech:4.42.0' // Google Cloud Speech API
-	implementation 'com.google.cloud:google-cloud-apikeys:0.45.0' // Google API Keys
-	implementation 'com.google.cloud:google-cloud-storage' // Google Cloud Storage
-	implementation platform("com.google.cloud:libraries-bom:25.1.0")
-	implementation 'com.google.cloud:google-cloud-speech' // Speech-to-text API
-	implementation 'com.google.cloud:google-cloud-service-management' // Service Management API
-
 
 }
 
