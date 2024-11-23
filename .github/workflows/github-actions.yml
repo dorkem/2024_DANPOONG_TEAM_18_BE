@@ -97,4 +97,4 @@ jobs:
             fi
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
-            sudo docker --name team-18 run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
+            sudo docker run --name team-18 -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
