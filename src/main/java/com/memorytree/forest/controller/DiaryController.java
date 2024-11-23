@@ -1,16 +1,14 @@
 package com.memorytree.forest.controller;
 
 import com.memorytree.forest.annotation.UserId;
-import com.memorytree.forest.domain.User;
 import com.memorytree.forest.dto.global.ResponseDto;
-import com.memorytree.forest.dto.request.DiaryAudioRequestDto;
 import com.memorytree.forest.dto.request.DiaryTextRequestDto;
-import com.memorytree.forest.dto.response.DiaryAudioResponseDto;
 import com.memorytree.forest.dto.response.DiaryQuizAnswerResponseDto;
 import com.memorytree.forest.dto.response.DiaryQuizResponseDto;
 import com.memorytree.forest.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/vi/diary")
@@ -19,15 +17,6 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
-
-    @PatchMapping("/audio")
-    public ResponseDto<?> audio(
-            @UserId Long id,
-            @RequestBody DiaryAudioRequestDto diaryAudioRequestDto
-    ){
-        DiaryAudioResponseDto diaryAudioResponseDto = diaryService.audioRecord(id, diaryAudioRequestDto.type());
-        return ResponseDto.ok(diaryAudioResponseDto);
-    }
     @PostMapping("/text")
     public ResponseDto<?> text(
             @UserId Long id,
