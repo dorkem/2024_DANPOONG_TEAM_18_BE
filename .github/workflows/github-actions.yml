@@ -82,7 +82,19 @@ jobs:
           port: 22
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            sudo docker stop team-18
+            port=${{ github.event.inputs.port }}
+            echo "Checking for containers using port $port..."
+
+            # Find the container ID using the specified port
+            container_id=$(docker ps --filter "publish=$port" --format "{{.ID}}")
+
+            if [ -n "$container_id" ]; then
+              echo "Found container with ID: $container_id. Stopping it..."
+              docker stop "$container_id"
+              echo "Container stopped successfully."
+            else
+              echo "No container is using port $port."
+            fi
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
-            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev --name team-18
+            sudo docker --name team-18 run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
