@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +46,10 @@ public class MissionService {
         LocalDate lastGamePlayedDate = user.getLastGamePlayedDate();
         boolean gamePlayed = false;
         if (lastGamePlayedDate != null) {
-            gamePlayed = lastGamePlayedDate.getMonth().equals(today.getMonth());
+            Long daysBetween = ChronoUnit.DAYS.between(lastGamePlayedDate, today);
+            if (daysBetween == 0) {
+                gamePlayed = true;
+            }
         }
         Boolean diaryWrote = diaryRepository.findByWhenAndUser(today.toLocalDate(), user).isPresent();
         return new MissionDto(

@@ -62,10 +62,10 @@ public class GameService {
         //       INTERNAL_SERVER_ERROR여야 하나?
         Game game = gameRepository.findByUser(user).orElseThrow(() -> new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
         GameType gameType = GameType.from(gameResult.gameType()).orElseThrow(() -> new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT));
-        float highScore = getHighScoreByGameType(gameType, game);
+        Float highScore = getHighScoreByGameType(gameType, game);
 
         boolean updated = false;
-        if (highScore > gameResult.score()) {
+        if (highScore == null || highScore > gameResult.score()) {
             updated = true;
             updateHighScoreByGameType(gameType, game, gameResult.score());
             gameRepository.save(game);
