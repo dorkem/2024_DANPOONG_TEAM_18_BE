@@ -2,14 +2,11 @@ package com.memorytree.forest.config;
 
 import com.memorytree.forest.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-
 @Configuration
 @EnableWebSecurity
 @Slf4j
@@ -30,31 +27,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-//
-//    private AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
-//        return (request, response, authentication) -> {
-//
-//            log.info("d");
-//
-//            OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//            var attributes = oAuth2User.getAttributes();
-//            var kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-//            var profile = (Map<String, Object>) kakaoAccount.get("profile");
-//
-//            Long id = (Long) attributes.get("id");
-//            String email = (String) kakaoAccount.get("email");
-//            String nickname = (String) profile.get("nickname");
-//            String profileImage = (String) profile.get("profile_image_url");
-//
-//            userService.createUser(id, nickname);
-//            userService.accumulateLoginStreak(id);
-//
-//            var responseDto = ResponseDto.ok(new LoginResponseDto(id, email, nickname, profileImage));
-//            response.setContentType("application/json");
-//            response.setCharacterEncoding("UTF-8");
-//            new ObjectMapper().writeValue(response.getWriter(), responseDto);
-//        };
-//    }
 
     public record LoginResponseDto(Long id, String email, String nickname, String profileImage) {}
 
