@@ -18,13 +18,14 @@ public class Diary {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "diary_when", nullable = false)
-    private LocalDate when;
-
     //FK
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Column(name = "diary_when", nullable = false)
+    private LocalDate when;
+
 
     @Column(name = "diary_what")
     private String what;
