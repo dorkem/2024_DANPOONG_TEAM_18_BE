@@ -39,10 +39,6 @@ public class UserService {
             // Game 엔티티 생성
             Game game = Game.builder()
                     .user(user)
-                    .numberSequenceGame(Float.MAX_VALUE)
-                    .spotDifferenceGame(Float.MAX_VALUE)
-                    .flipCardGame(Float.MAX_VALUE)
-                    .tangramPuzzle(Float.MAX_VALUE)
                     .build();
             gameRepository.save(game);
         }
