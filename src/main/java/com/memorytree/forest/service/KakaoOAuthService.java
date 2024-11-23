@@ -1,7 +1,9 @@
 package com.memorytree.forest.service;
 
+import com.memorytree.forest.domain.Game;
 import com.memorytree.forest.dto.response.KakaoUserInfoResponseDto;
 import com.memorytree.forest.domain.User;
+import com.memorytree.forest.repository.GameRepository;
 import com.memorytree.forest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -21,6 +23,7 @@ public class KakaoOAuthService {
 
     private static final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
+    private final GameRepository gameRepository;
 
     public KakaoUserInfoResponseDto getKakaoUserInfo(String code) {
         // 1. 인가 코드로 액세스 토큰 요청
@@ -86,7 +89,9 @@ public class KakaoOAuthService {
                     .name(userInfo.getNickname())
                     .profile(userInfo.getProfileImage())
                     .build();
+            Game game = Game.builder().user(newUser).build();
             userRepository.save(newUser);
+            gameRepository.save(game);
         }
     }
 }
