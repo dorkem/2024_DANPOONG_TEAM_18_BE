@@ -3,9 +3,9 @@ package com.memorytree.forest.dto.response;
 import java.util.Optional;
 
 public enum GameType {
-    숫자_순서_게임("숫자순서게임"),
-    틀린_글자_찾기("틀린글자찾기"),
-    카드_뒤집기("카드뒤집기");
+    숫자_순서_게임("숫자 순서 게임"),
+    틀린_글자_찾기("틀린 단어 찾기 게임"),
+    카드_뒤집기("카드 뒤집기 게임");
 
     private final String value;
 
