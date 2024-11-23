@@ -1,16 +1,15 @@
 package com.memorytree.forest.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @Table(name = "game")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
@@ -27,14 +26,14 @@ public class Game {
 
 
     @Column(name = "number_sequence_game")
-    private Float numberSequenceGame;
+    private Float numberSequenceGame = Float.MAX_VALUE;
 
     @Column(name = "spot_difference_game")
-    private Float spotDifferenceGame;
+    private Float spotDifferenceGame= Float.MAX_VALUE;;
 
     @Column(name = "flip_card_game")
-    private Float flipCardGame;
+    private Float flipCardGame= Float.MAX_VALUE;;
 
     @Column(name = "tangram_puzzle")
-    private Float tangramPuzzle;
+    private Float tangramPuzzle = Float.MAX_VALUE;;
 }
