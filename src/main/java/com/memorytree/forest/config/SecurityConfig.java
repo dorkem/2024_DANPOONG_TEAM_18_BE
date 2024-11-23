@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/login/**", "/favicon.ico", "/api/v1/setting").permitAll()
+                        .requestMatchers("/api/auth/login/**", "/favicon.ico", "/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable());
