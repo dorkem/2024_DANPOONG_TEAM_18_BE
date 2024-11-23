@@ -178,21 +178,4 @@ public class DiaryService {
         }
     }
 
-    public DiaryQuizAnswerResponseDto confirmAnswer(Long id, String answer){
-        // 요청 파라미터 검증
-        if (id == null || answer == null) {
-            throw new CommonException(ErrorCode.MISSING_REQUEST_PARAMETER);
-        }
-
-        // 사용자 정보 조회
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new CommonException(ErrorCode.WRONG_USER));
-
-        boolean correct = false;
-        if(user.getDiaryAnswer() == answer){
-            correct = true;
-        }
-        userService.addEXPAfterQuizPlayed(id);
-        return new DiaryQuizAnswerResponseDto(correct, user.getDiaryAnswer());
-    }
 }

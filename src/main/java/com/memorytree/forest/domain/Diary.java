@@ -14,6 +14,10 @@ import java.time.LocalDate;
 public class Diary {
     // PK로 날짜 사용
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
     @Column(name = "diary_when", nullable = false)
     private LocalDate when;
 
