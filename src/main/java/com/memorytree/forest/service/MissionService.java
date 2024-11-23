@@ -13,6 +13,7 @@ import com.memorytree.forest.repository.GameRepository;
 import com.memorytree.forest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,11 @@ public class MissionService {
                 new GameRecordDto("틀린 글자 찾기", game.getSpotDifferenceGame()),
                 new GameRecordDto("카드 뒤집기", game.getFlipCardGame()));
         LocalDateTime today = LocalDateTime.now();
-        Boolean gamePlayed = user.getLastGamePlayedDate().getMonth().equals(today.getMonth());
+        LocalDate lastGamePlayedDate = user.getLastGamePlayedDate();
+        boolean gamePlayed = false;
+        if (lastGamePlayedDate != null) {
+            gamePlayed = lastGamePlayedDate.getMonth().equals(today.getMonth());
+        }
         Boolean diaryWrote = diaryRepository.findByWhenAndUser(today.toLocalDate(), user).isPresent();
         return new MissionDto(
                 gamePlayed,
