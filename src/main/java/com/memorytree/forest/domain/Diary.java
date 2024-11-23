@@ -14,13 +14,18 @@ import java.time.LocalDate;
 public class Diary {
     // PK로 날짜 사용
     @Id
-    @Column(name = "diary_when", nullable = false)
-    private LocalDate when;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     //FK
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Column(name = "diary_when", nullable = false)
+    private LocalDate when;
+
 
     @Column(name = "diary_what")
     private String what;
